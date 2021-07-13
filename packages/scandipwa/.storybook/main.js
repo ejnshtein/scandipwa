@@ -12,7 +12,6 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    // "@storybook/preset-scss",
     {
       name: "storybook-preset-mosaic-craco",
       options: {
@@ -21,28 +20,6 @@ module.exports = {
     }
   ],
   webpackFinal: (webpackConfig) => {
-    // const injectedConfig = injectWebpackConfig(config, { webpack })
-
-    // return config
-
-    // const jsRules = webpackConfig.module.rules.filter(rule => rule.test && !Array.isArray(rule.test) && rule.test.test('file.js'))
-
-    // for (const rule of jsRules) {
-    //   for (const u of rule.use) {
-    //     u.options = u.options || {}
-    //     u.options.presets = u.options.presets || []
-    //     const hasPresetReact = u.options.presets.some(preset => {
-    //       const presetPath = Array.isArray(preset) ? preset[0]: preset
-
-    //       return presetPath.includes('@babel/preset-react')
-    //     })
-
-    //     if (!hasPresetReact) {
-    //       u.options.presets.push(require.resolve('@babel/preset-react'))
-    //     }
-    //   }
-    // }
-
     const sanitize = (str) => str.replace(/\/\*$/i, '')
 
     const projectAliases = Object.entries(jsConfig.compilerOptions.paths)
@@ -65,19 +42,8 @@ module.exports = {
         }
     })
 
-    // injectedConfig.module.rules.push({
-    //   test: /\.scss$/,
-    //   use: ['style-loader', 'css-loader', 'sass-loader'],
-    //   include: path.resolve(__dirname, '../'),
-    // })
-
     return webpackConfig
   },
-  // babel: (config) => {
-  //   return {
-  //     ...config
-  //   }
-  // },
   typescript: {
     check: false,
     checkOptions: {},
