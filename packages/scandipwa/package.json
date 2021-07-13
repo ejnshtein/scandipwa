@@ -6,7 +6,7 @@
     "start": "scandipwa-scripts start",
     "start:magento": "BUILD_MODE=magento scandipwa-scripts start",
     "build": "scandipwa-scripts build",
-    "sb": "start-storybook -p 6006",
+    "sb": "start-storybook -p 6006 --ci",
     "build-sb": "build-storybook"
   },
   "dependencies": {

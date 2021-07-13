@@ -11,6 +11,7 @@
 
 import '../src/util/Polyfill';
 import '../src/style/main';
+import { App } from './base/App.component';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -21,3 +22,13 @@ export const parameters = {
     },
   }
 }
+
+
+
+export const decorators = [
+  (Story) => (
+    <App>
+      <Story />
+    </App>
+  ),
+];

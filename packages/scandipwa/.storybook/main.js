@@ -1,6 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
-const { injectWebpackConfig } = require('@tilework/mosaic-config-injectors');
+const FallbackPlugin = require('@tilework/mosaic-webpack-fallback-plugin');
+const { injectWebpackConfig } = require('@tilework/mosaic-config-injectors')
+const i18nPlugin = require('@scandipwa/webpack-i18n-runtime/build-config/config.plugin')
 
 const jsConfig = require('../jsconfig.json')
 
@@ -20,6 +22,8 @@ module.exports = {
     }
   ],
   webpackFinal: (webpackConfig) => {
+    injectWebpackConfig(webpackConfig, { webpack })
+    i18nPlugin.plugin.overrideWebpackConfig({ webpackConfig })
     const sanitize = (str) => str.replace(/\/\*$/i, '')
 
     const projectAliases = Object.entries(jsConfig.compilerOptions.paths)
@@ -41,6 +45,21 @@ module.exports = {
             plugin.options.ignoreOrder = true;
         }
     })
+
+    webpackConfig.module.rules.forEach((rule) => {
+      if (rule.oneOf) {
+        rule.oneOf
+        .find(one => one.test && !Array.isArray(one.test) && one.test.test('file.scss'))
+        .use.push({
+          loader: 'sass-resources-loader',
+          options: {
+            resources: FallbackPlugin.getFallbackPathname('src/style/abstract/_abstract.scss')
+          }
+        })
+      }
+    })
+
+    // webpackConfig.plugins.push(new WebpackI18nRuntimePlugin())
 
     return webpackConfig
   },
