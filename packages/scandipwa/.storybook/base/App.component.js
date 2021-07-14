@@ -118,7 +118,12 @@ export class App extends PureComponent {
     }
 
     renderChildren() {
-        return <Router key="router" />;
+        const { children } = this.props
+        return (
+            <Router key="router">
+                { children }
+            </Router>
+        );
     }
 
     renderRootComponents = () => this.rootComponents.map((render) => render());
