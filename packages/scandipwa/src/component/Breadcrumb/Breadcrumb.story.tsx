@@ -13,26 +13,27 @@ import * as React from 'react';
 import { Story } from '@storybook/react'
 
 import Breadcrumb, { BreadcrumbProps } from './Breadcrumb.component';
+import { TemplateProps } from '.storybook/base/template';
 
 const Template: Story<BreadcrumbProps> = (args) => (<Breadcrumb { ...args } />);
 
-export type BTemplate<Props> = {
-    args: Props
-}
-
-export const DefaultBreadcrumb = Template.bind({}) as BTemplate<BreadcrumbProps>;
+export const DefaultBreadcrumb = Template.bind({}) as TemplateProps<BreadcrumbProps>;
 
 DefaultBreadcrumb.args = {
     index: 1,
     isDisabled: false,
-    url: {
-        '/': 'Home',
-        '/404': '404'
-    },
+    url: '/Home',
     name: 'Breadcrumb'
 };
 
 export default {
     title: 'Breadcrumb',
-    component: Breadcrumb
+    component: Breadcrumb,
+    decorators: [
+        (Story) => (
+            <ul>
+                <Story />
+            </ul>
+        )
+    ]
 };
