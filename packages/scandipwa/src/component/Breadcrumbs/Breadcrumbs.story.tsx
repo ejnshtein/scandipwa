@@ -11,18 +11,39 @@
 import * as React from 'react';
 
 import { Story } from '@storybook/react'
-
-import { TemplateProps } from '../../../.storybook/base/template'
-
 import Breadcrumbs, { BreadcrumbsProps } from './Breadcrumbs.container';
+import getStore from 'Util/Store';
+
+const BreadcrumbsDispatcher = import(
+    /* webpackMode: "lazy", webpackChunkName: "dispatchers" */
+    'Store/Breadcrumbs/Breadcrumbs.dispatcher'
+);
 
 const Template: Story<BreadcrumbsProps> = (args) => (<Breadcrumbs { ...args } />);
 
-export const DefaultBreadcrumb = Template.bind({}) as TemplateProps<BreadcrumbsProps>;
+export const DefaultBreadcrumb = Template.bind({});
+DefaultBreadcrumb.args = {
+    areBreadcrumbsVisible: {
+        type: 'boolean',
+    },
+    breadcrumbs: []
+}
 
-DefaultBreadcrumb.args = {};
+const { dispatch } = getStore()
+
+BreadcrumbsDispatcher.then(
+    ({ default: dispatcher }) => dispatcher.update([{name: '1', url: '/1 '}], dispatch)
+)
 
 export default {
     title: 'Breadcrumbs',
-    component: Breadcrumbs
+    component: Breadcrumbs,
+    argTypes: {
+        breadcrumbs: {
+            disable: true
+        },
+        areBreadcrumbsVisible: {
+            disable: true
+        }
+    }
 };

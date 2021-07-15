@@ -12,7 +12,7 @@
 import { PureComponent } from 'react';
 import { Provider } from 'react-redux';
 import { Provider as UnstatedProvider } from 'unstated';
-import { Router } from './Router.component';
+import { Router } from '../Router';
 
 // import Router from 'Component/Router';
 import SharedTransition from 'Component/SharedTransition';

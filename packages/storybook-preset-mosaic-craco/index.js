@@ -1,9 +1,15 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/no-dynamic-require, global-require, @scandipwa/scandipwa-guidelines/export-level-one */
 
 const {
     createWebpackDevConfig,
     createWebpackProdConfig
 } = require('@tilework/mosaic-craco');
+const path = require('path');
+const webpackPackage = require('webpack');
+const FallbackPlugin = require('@tilework/mosaic-webpack-fallback-plugin');
+const { injectWebpackConfig, injectBabelConfig } = require('@tilework/mosaic-config-injectors');
+const i18nPlugin = require('@scandipwa/webpack-i18n-runtime/build-config/config.plugin');
 
 const { logger } = require('@storybook/node-logger');
 
@@ -20,6 +26,8 @@ const {
 const {
     getModulePath
 } = require('@storybook/preset-create-react-app/dist/helpers/getModulePath');
+
+const jsConfig = require(path.resolve('jsconfig.json'));
 
 const CWD = process.cwd();
 
@@ -134,7 +142,7 @@ const webpackFinal = (webpackConfig = {}) => {
     logger.info('=> Removing storybook default rules.');
 
     // these are suppreseed by storybook when @storybook/preset-create-react-app is present.
-    const rules = webpackConfig.module.rules.filter(
+    webpackConfig.module.rules = webpackConfig.module.rules.filter(
         (rule) => !(
             rule.test instanceof RegExp
         && (rule.test.test('.css')
@@ -143,13 +151,54 @@ const webpackFinal = (webpackConfig = {}) => {
         )
     );
 
-    return {
-        ...webpackConfig,
-        module: {
-            ...webpackConfig.module,
-            rules
-        }
+    injectWebpackConfig(webpackConfig, { webpack: webpackPackage, shouldApplyPlugins: false });
+    i18nPlugin.plugin.overrideWebpackConfig({ webpackConfig });
+    const sanitize = (str) => str.replace(/\/\*$/i, '');
+
+    const projectAliases = Object.entries(jsConfig.compilerOptions.paths)
+        .reduce((acc, [aliasName, aliasPaths]) => ({
+            ...acc,
+            [sanitize(aliasName)]: path.resolve(sanitize(aliasPaths[0]))
+        }), {});
+
+    webpackConfig.resolve.alias = {
+        ...webpackConfig.resolve.alias,
+        ...projectAliases
     };
+
+    // Allow importing .style, .ts and .tsx files without specifying the extension
+    webpackConfig.resolve.extensions.push('.scss', '.ts', '.tsx');
+
+    webpackConfig.plugins.forEach((plugin) => {
+        if (plugin.constructor.name === 'MiniCssExtractPlugin') {
+            plugin.options.ignoreOrder = true;
+        }
+    });
+
+    const rule = webpackConfig.module.rules.find((r) => r.oneOf);
+    if (rule.oneOf) {
+        const sassRule = rule.oneOf.find((one) => one.test && !Array.isArray(one.test) && one.test.test('file.scss'));
+        if (sassRule) {
+            sassRule.use.push({
+                loader: 'sass-resources-loader',
+                options: {
+                    resources: FallbackPlugin.getFallbackPathname('src/style/abstract/_abstract.scss')
+                }
+            });
+        }
+    }
+
+    webpackConfig.plugins.push(
+        new webpackPackage.DefinePlugin({
+            'process.env': {
+                REBEM_MOD_DELIM: JSON.stringify('_'),
+                REBEM_ELEM_DELIM: JSON.stringify('-'),
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+            }
+        })
+    );
+
+    return webpackConfig;
 };
 
 const managerWebpack = (webpackConfig = {}, options) => {
@@ -173,8 +222,19 @@ const managerWebpack = (webpackConfig = {}, options) => {
     };
 };
 
+const babel = (babelConfig) => {
+    babelConfig.plugins.unshift(
+        require.resolve('babel-plugin-transform-rebem-jsx')
+    );
+
+    return injectBabelConfig(babelConfig, {
+        shouldApplyPlugins: false
+    });
+};
+
 module.exports = {
     babelDefault,
+    babel,
     webpack,
     webpackFinal,
     managerWebpack

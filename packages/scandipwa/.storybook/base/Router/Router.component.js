@@ -28,7 +28,7 @@
  export const withStoreRegex = (path) => window.storeRegexText.concat(path);
  
  /** @namespace Component/Router/Component */
- export class Router extends PureComponent {
+ export class RouterComponent extends PureComponent {
      static propTypes = {
          isBigOffline: PropTypes.bool
      };
@@ -120,4 +120,5 @@
          );
      }
  }
- 
+
+ export default RouterComponent;

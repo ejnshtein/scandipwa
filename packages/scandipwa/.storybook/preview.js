@@ -11,7 +11,8 @@
 
 import '../src/util/Polyfill';
 import '../src/style/main';
-import { App } from './base/App.component';
+import { App } from './base/App';
+import fetch from 'node-fetch'
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -22,8 +23,6 @@ export const parameters = {
     },
   }
 }
-
-
 
 export const decorators = [
   (Story) => (
