@@ -19,16 +19,15 @@ const Template: Story<BreadcrumbProps> = (args) => (<Breadcrumb { ...args } />);
 
 export const DefaultBreadcrumb = Template.bind({}) as TemplateProps<BreadcrumbProps>;
 
-DefaultBreadcrumb.args = {
-    index: 1,
-    isDisabled: false,
-    url: '/Home',
-    name: 'Breadcrumb'
-};
-
 export default {
-    title: 'Breadcrumb',
+    title: 'Atoms/Breadcrumb',
     component: Breadcrumb,
+    args: {
+        index: 1,
+        isDisabled: false,
+        url: '/Home',
+        name: 'Breadcrumb'
+    },
     decorators: [
         (Story) => (
             <ul>

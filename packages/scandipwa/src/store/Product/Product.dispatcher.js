@@ -21,8 +21,6 @@ export const LinkedProductsDispatcher = import(
 
 /**
  * Product List Dispatcher
- * @class ProductDispatcher
- * @extends ProductDispatcher
  * @namespace Store/Product/Dispatcher
  */
 export class ProductDispatcher extends QueryDispatcher {
