@@ -11,8 +11,7 @@
 import * as React from 'react';
 
 import { Story } from '@storybook/react'
-import Breadcrumbs from './Breadcrumbs.component';
-import { BreadcrumbsProps } from './Breadcrumbs.container';
+import Breadcrumbs, { BreadcrumbsProps } from './Breadcrumbs.component';
 
 const Template: Story<BreadcrumbsProps> = (args) => (<Breadcrumbs { ...args } />);
 
@@ -22,9 +21,7 @@ export default {
     title: 'Molecules/Breadcrumbs',
     component: Breadcrumbs,
     args: {
-        areBreadcrumbsVisible: {
-            type: 'boolean',
-        },
+        areBreadcrumbsVisible: true,
         breadcrumbs: [
             {
                 name: 'Breadcrumb name',

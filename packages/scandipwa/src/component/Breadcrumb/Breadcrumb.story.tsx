@@ -17,16 +17,28 @@ import { TemplateProps } from '.storybook/base/template';
 
 const Template: Story<BreadcrumbProps> = (args) => (<Breadcrumb { ...args } />);
 
-export const DefaultBreadcrumb = Template.bind({}) as TemplateProps<BreadcrumbProps>;
+export const DefaultBreadcrumb = Template.bind({})
 
 export default {
     title: 'Atoms/Breadcrumb',
     component: Breadcrumb,
     args: {
-        index: 1,
-        isDisabled: false,
         url: '/Home',
         name: 'Breadcrumb'
+    },
+    artTypes: {
+        isDisabled: {
+            type: 'boolean'
+        },
+        index: {
+            type: 'number'
+        },
+        url: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        }
     },
     decorators: [
         (Story) => (

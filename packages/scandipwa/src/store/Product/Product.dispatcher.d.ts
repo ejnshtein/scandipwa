@@ -8,6 +8,4 @@ export class ProductDispatcher extends QueryDispatcher {
     prepareRequest(options: unknown): Field
 }
 
-type ProductDispatcherType = InstanceType<ProductDispatcher>
-
-export default ProductDispatcherType
+export default new ProductDispatcher();
