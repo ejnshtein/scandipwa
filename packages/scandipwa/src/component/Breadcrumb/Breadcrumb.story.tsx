@@ -13,7 +13,6 @@ import * as React from 'react';
 import { Story } from '@storybook/react'
 
 import Breadcrumb, { BreadcrumbProps } from './Breadcrumb.component';
-import { TemplateProps } from '.storybook/base/template';
 
 const Template: Story<BreadcrumbProps> = (args) => (<Breadcrumb { ...args } />);
 
@@ -24,21 +23,9 @@ export default {
     component: Breadcrumb,
     args: {
         url: '/Home',
-        name: 'Breadcrumb'
-    },
-    artTypes: {
-        isDisabled: {
-            type: 'boolean'
-        },
-        index: {
-            type: 'number'
-        },
-        url: {
-            type: 'string'
-        },
-        name: {
-            type: 'string'
-        }
+        name: 'Breadcrumb',
+        index: 1,
+        isDisabled: false
     },
     decorators: [
         (Story) => (
