@@ -16,6 +16,7 @@ import { Provider as UnstatedProvider } from 'unstated';
 import { Router } from 'Component/Router';
 import SharedTransition from 'Component/SharedTransition';
 import SomethingWentWrong from 'Component/SomethingWentWrong';
+import { ThemeProvider } from 'Component/ThemeProvider';
 import { DeviceContextProvider } from 'Store/Device/Device.provider';
 import injectStaticReducers from 'Store/index';
 import { SimpleComponent } from 'Util/SimpleComponent';
@@ -52,6 +53,7 @@ export class AppComponent extends SimpleComponent<AppProps> {
     ];
 
     contextProviders = [
+        this.renderThemeProvider.bind(this),
         this.renderDeviceContext.bind(this),
         this.renderRedux.bind(this),
         this.renderUnStated.bind(this)
@@ -73,6 +75,14 @@ export class AppComponent extends SimpleComponent<AppProps> {
         const store = getStore();
 
         this.reduxStore = injectStaticReducers(store);
+    }
+
+    renderThemeProvider(children: JSX.Element): JSX.Element {
+        return (
+            <ThemeProvider>
+                { children }
+            </ThemeProvider>
+        );
     }
 
     renderRedux(children: JSX.Element): JSX.Element {

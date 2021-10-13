@@ -17,14 +17,20 @@ import { ConfigQuery, StoreListData } from 'Query/Config.query';
 import { useDeviceContext } from 'Store/Device';
 import { useNotificationStore } from 'Store/Notification';
 import { BrowserDatabase } from 'Util/BrowserDatabase';
+import { useStyles } from 'Util/CSS';
 import { renderHOC } from 'Util/RenderHOC';
 import { RootState } from 'Util/Store/type';
 
 import { FormattedStoreList, StoreSwitcherComponent, StoreSwitcherProps } from './StoreSwitcher.component';
 import { STORE_CONFIG_KEY } from './StoreSwitcher.config';
+import { StoreSwitcherStyleType, styles } from './StoreSwitcher.styles';
+
+export interface StoreSwitcherSelectorType {
+    currentStoreCode: string
+}
 
 /** @namespace Component/StoreSwitcher/Container/storeSwitcherSelector */
-export const storeSwitcherSelector = (state: RootState) => ({
+export const storeSwitcherSelector = (state: RootState): StoreSwitcherSelectorType => ({
     currentStoreCode: state.ConfigReducer.code as string
 });
 
@@ -59,11 +65,14 @@ export const formatStoreList = (
         }, []
     );
 
+/** @namespace Component/StoreSwitcher/Container/useComponentStyles */
+export const useComponentStyles = (): StoreSwitcherStyleType => useStyles(styles);
+
 /** @namespace Component/StoreSwitcher/Container/storeSwitcherLogic */
 export const storeSwitcherLogic = (): StoreSwitcherProps => {
     const { isMobile } = useDeviceContext();
     const { currentStoreCode = 'default' } = useSelector(storeSwitcherSelector);
-    const [isOpened, setIsOpened] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [storeLabel, setStoreLabel] = useState('');
     const [storeList, setStoreList] = useState<FormattedStoreList[]>([]);
     const { showNotification } = useNotificationStore();
@@ -89,12 +98,12 @@ export const storeSwitcherLogic = (): StoreSwitcherProps => {
     }, [storeList, showErrorNotification]);
 
     const onStoreSwitcherClick = useCallback(() => {
-        setIsOpened(!isOpened);
-    }, [isOpened, setIsOpened]);
+        setIsOpen(!isOpen);
+    }, [isOpen, setIsOpen]);
 
     const onStoreSwitcherOutsideClick = useCallback(() => {
-        setIsOpened(false);
-    }, [setIsOpened]);
+        setIsOpen(false);
+    }, [setIsOpen]);
 
     const setCurrentStoreLabel = useCallback((storeCode: string) => {
         const store = storeList.find(
@@ -132,15 +141,18 @@ export const storeSwitcherLogic = (): StoreSwitcherProps => {
         setStoreList(formatStoreList(storeList));
     }, [data]);
 
+    const css = useComponentStyles();
+
     return {
-        isOpened,
+        isOpen,
         storeLabel,
         handleStoreSelect,
         currentStoreCode,
         onStoreSwitcherClick,
         onStoreSwitcherOutsideClick,
         isMobile,
-        storeList
+        storeList,
+        css
     };
 };
 

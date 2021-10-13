@@ -10,3 +10,5 @@
  */
 
 export { default, getFixedElementHeight, getElementHeight } from './CSS';
+export * from './Emotion';
+export * from './Helpers';

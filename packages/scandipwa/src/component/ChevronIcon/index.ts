@@ -9,4 +9,5 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-export { default } from './StoreItems.container';
+export { default } from './ChevronIcon.container';
+export * from './ChevronIcon.container';

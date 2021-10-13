@@ -9,14 +9,17 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-import ChevronIcon from 'Component/ChevronIcon';
-import { BOTTOM, TOP } from 'Component/ChevronIcon/ChevronIcon.config';
+import { ChevronIcon } from 'Component/ChevronIcon';
+import { ChevronDirection } from 'Component/ChevronIcon/ChevronIcon.config';
 import ClickOutside from 'Component/ClickOutside';
 import { Field } from 'Component/PureForm/Field';
 import { FIELD_TYPE } from 'Component/PureForm/Field/Field.config';
 import { FieldSelectOption } from 'Component/PureForm/FieldSelect';
-import StoreItems from 'Component/StoreItems';
+import { StoreItems } from 'Component/StoreItems';
+import { classWithMods, cx } from 'Util/CSS';
 import { SimpleComponent } from 'Util/SimpleComponent';
+
+import { StoreSwitcherStyleType } from './StoreSwitcher.styles';
 
 import './StoreSwitcher.style';
 
@@ -27,13 +30,14 @@ export interface FormattedStoreList extends FieldSelectOption {
 
 export interface StoreSwitcherProps {
     storeList: FormattedStoreList[]
-    isOpened: boolean
+    isOpen: boolean
     currentStoreCode: string
     handleStoreSelect: (storeCode: string) => void
     onStoreSwitcherClick: () => void
     onStoreSwitcherOutsideClick: () => void
     storeLabel: string
-    isMobile: boolean
+    isMobile: boolean,
+    css: StoreSwitcherStyleType
 }
 
 /** @namespace Component/StoreSwitcher/Component */
@@ -55,11 +59,12 @@ export class StoreSwitcherComponent extends SimpleComponent<StoreSwitcherProps> 
         const {
             storeList,
             handleStoreSelect,
-            currentStoreCode
+            currentStoreCode,
+            css
         } = this.props;
 
         return (
-            <div block="StoreSwitcher">
+            <div className={ cx(css.root, css.rootWithChevron) }>
                 <Field
                   type={ FIELD_TYPE.select }
                   attr={ {
@@ -81,26 +86,27 @@ export class StoreSwitcherComponent extends SimpleComponent<StoreSwitcherProps> 
             storeList,
             onStoreSwitcherOutsideClick,
             onStoreSwitcherClick,
-            isOpened,
-            storeLabel
+            isOpen,
+            storeLabel,
+            css
         } = this.props;
 
-        const mods = { isOpen: isOpened };
+        const mods = { isOpen };
 
         return (
-            <div block="StoreSwitcher">
+            <div className={ cx(css.root, css.rootWithChevron) }>
                 <ClickOutside onClick={ onStoreSwitcherOutsideClick }>
                     <button
-                      block="StoreSwitcher"
-                      elem="Title"
-                      mods={ mods }
+                      className={ classWithMods(css.title, mods) }
                       onClick={ onStoreSwitcherClick }
                     >
                         { storeLabel }
-                        <ChevronIcon direction={ isOpened ? TOP : BOTTOM } />
+                        <ChevronIcon
+                          direction={ isOpen ? ChevronDirection.TOP : ChevronDirection.BOTTOM }
+                        />
                     </button>
 
-                    <div block="StoreSwitcher" elem="StoreList" mods={ mods }>
+                    <div className={ classWithMods(css.list, mods) }>
                         { storeList.map(this.renderStoreList) }
                     </div>
                 </ClickOutside>

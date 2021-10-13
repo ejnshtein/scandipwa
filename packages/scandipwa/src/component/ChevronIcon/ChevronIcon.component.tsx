@@ -10,31 +10,27 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-import { PureComponent } from 'react';
+import { classWithMods } from 'Util/CSS';
+import { SimpleComponent } from 'Util/SimpleComponent';
 
-import { DirectionType } from 'Type/Direction';
+import { ChevronDirection, ChevronDirectionType } from './ChevronIcon.config';
+import { ChevronIconStyleType } from './ChevronIcon.styles';
 
-import { RIGHT } from './ChevronIcon.config';
+export interface ChevronIconProps {
+    direction: ChevronDirectionType;
+    css: ChevronIconStyleType;
+}
 
-import './ChevronIcon.style';
-
-/** @namespace Component/ChevronIcon/Component */
-export class ChevronIcon extends PureComponent {
-    static propTypes = {
-        direction: DirectionType
-    };
-
-    static defaultProps = {
-        direction: RIGHT
-    };
-
-    render() {
-        const { direction } = this.props;
+export class ChevronIconComponent extends SimpleComponent<ChevronIconProps> {
+    render(): JSX.Element {
+        const {
+            direction = ChevronDirection.RIGHT,
+            css
+        } = this.props;
 
         return (
             <svg
-              block="ChevronIcon"
-              mods={ { direction } }
+              className={ classWithMods(css.root, { direction }) }
               width="16"
               height="16"
               viewBox="0 0 16 16"
@@ -46,5 +42,3 @@ export class ChevronIcon extends PureComponent {
         );
     }
 }
-
-export default ChevronIcon;
