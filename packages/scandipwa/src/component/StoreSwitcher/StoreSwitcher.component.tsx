@@ -12,19 +12,17 @@
 import ChevronIcon from 'Component/ChevronIcon';
 import { BOTTOM, TOP } from 'Component/ChevronIcon/ChevronIcon.config';
 import ClickOutside from 'Component/ClickOutside';
-import Field from 'Component/PureForm/Field';
-import FIELD_TYPE from 'Component/PureForm/Field/Field.config';
+import { Field } from 'Component/PureForm/Field';
+import { FIELD_TYPE } from 'Component/PureForm/Field/Field.config';
+import { FieldSelectOption } from 'Component/PureForm/FieldSelect';
 import StoreItems from 'Component/StoreItems';
 import { SimpleComponent } from 'Util/SimpleComponent';
 
 import './StoreSwitcher.style';
 
-export interface FormattedStoreList {
-    id: string
-    value: string
+export interface FormattedStoreList extends FieldSelectOption {
     storeUrl: string
     storeLinkUrl: string
-    label: string
 }
 
 export interface StoreSwitcherProps {
