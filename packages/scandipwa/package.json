@@ -132,7 +132,7 @@
             "@scandipwa/scandipwa-guidelines/jsx-no-conditional": "off",
             "@scandipwa/scandipwa-guidelines/use-magic-construct": "warn",
             "@scandipwa/scandipwa-guidelines/no-jsx-variables": "off",
-            "@scandipwa/scandipwa-guidelines/use-license": "error",
+            "@scandipwa/scandipwa-guidelines/use-license": "off",
             "react/jsx-no-useless-fragment": "off",
             "max-classes-per-file": "off",
             "max-lines": "off",
