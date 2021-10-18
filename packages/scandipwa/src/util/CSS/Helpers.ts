@@ -4,6 +4,7 @@ import { cx } from './Emotion';
 
 export type InferStyleType<T> = Record<keyof T, string>;
 
+/** @namespace Util/CSS/Helpers/useStyles */
 export const useStyles = <
     T extends Record<string, (theme: ThemeType) => string>,
     R extends Record<keyof T, string>
@@ -16,6 +17,7 @@ export const useStyles = <
     }), {} as R);
 };
 
+/** @namespace Util/CSS/Helpers/styleMods */
 export const styleMods = (
     cls: string,
     mods: Record<string, unknown>
@@ -31,6 +33,7 @@ export const styleMods = (
     return '';
 });
 
+/** @namespace Util/CSS/Helpers/classWithMods */
 export const classWithMods = (cls: string, mods: Record<string, unknown>): string => cx(
     cls,
     styleMods(cls, mods)
