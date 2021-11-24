@@ -12,7 +12,7 @@
 import { connect } from 'react-redux';
 
 import {
-    mapStateToProps as sourceMapStateToProps
+    myAccountAddressFormSelector as sourceMapStateToProps
 } from 'Component/MyAccountAddressForm/MyAccountAddressForm.container';
 
 import CheckoutAddressForm from './CheckoutAddressForm.component';
