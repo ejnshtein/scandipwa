@@ -1,3 +1,14 @@
+/**
+ * ScandiPWA - Progressive Web App for Magento
+ *
+ * Copyright © Scandiweb, Inc. All rights reserved.
+ * See LICENSE for license details.
+ *
+ * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
+ * @package scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
+ */
+
 import {
     Element,
     MEDIA,
@@ -18,8 +29,9 @@ export const mediaTypes: Record<string, string> = {
     mobile: '(max-width: 810px)',
     standalone: 'all and (display-mode: standalone)'
 };
-/* eslint-enable */
+/* eslint-enable max-len */
 
+/** @namespace Util/CSS/MediaQuery/Plugin/mediaQueryPlugin */
 export const mediaQueryPlugin = (
     element: Element,
     _index: number,

@@ -17,13 +17,12 @@ import { ConfigQuery, StoreListData } from 'Query/Config.query';
 import { useDeviceContext } from 'Store/Device';
 import { useNotificationStore } from 'Store/Notification';
 import { BrowserDatabase } from 'Util/BrowserDatabase';
-import { useStyles } from 'Util/CSS';
 import { renderHOC } from 'Util/RenderHOC';
 import { RootState } from 'Util/Store/type';
 
 import { FormattedStoreList, StoreSwitcherComponent, StoreSwitcherProps } from './StoreSwitcher.component';
 import { STORE_CONFIG_KEY } from './StoreSwitcher.config';
-import { StoreSwitcherStyleType, styles } from './StoreSwitcher.styles';
+import { useComponentStyles } from './StoreSwitcher.styles';
 
 export interface StoreSwitcherSelectorType {
     currentStoreCode: string
@@ -64,9 +63,6 @@ export const formatStoreList = (
             ];
         }, []
     );
-
-/** @namespace Component/StoreSwitcher/Container/useComponentStyles */
-export const useComponentStyles = (): StoreSwitcherStyleType => useStyles(styles);
 
 /** @namespace Component/StoreSwitcher/Container/storeSwitcherLogic */
 export const storeSwitcherLogic = (): StoreSwitcherProps => {

@@ -17,7 +17,7 @@ import { GRID_LAYOUT, LIST_LAYOUT } from 'Component/CategoryPage/CategoryPage.co
 import Image from 'Component/Image';
 import Link from 'Component/Link';
 import Loader from 'Component/Loader';
-import { Product } from 'Component/Product/Product.component';
+import Product from 'Component/Product';
 import PRODUCT_TYPE from 'Component/Product/Product.config';
 import TextPlaceholder from 'Component/TextPlaceholder';
 import { DeviceType } from 'Type/Device';

@@ -21,6 +21,7 @@ export interface ChevronIconProps {
     css: ChevronIconStyleType;
 }
 
+/** @namespace Component/ChevronIcon/Component */
 export class ChevronIconComponent extends SimpleComponent<ChevronIconProps> {
     render(): JSX.Element {
         const {

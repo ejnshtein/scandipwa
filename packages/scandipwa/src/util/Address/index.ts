@@ -6,17 +6,20 @@
  *
  * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
  * @package scandipwa/base-theme
- * @link https://github.com/scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
  */
 
+import { AddressType, TrimmedAddressType } from 'Type/Account';
+import { CountryType, RegionType } from 'Type/Config';
+
 /** @namespace Util/Address/Index/trimCustomerAddress */
-export const trimCustomerAddress = (customerAddress) => {
+export const trimCustomerAddress = (customerAddress: AddressType): TrimmedAddressType => {
     const {
         default_shipping = false,
         default_billing = false,
         company = null,
         city = '',
-        country_id = 1,
+        country_id = '1',
         firstname = '',
         lastname = '',
         middlename = '',
@@ -57,11 +60,11 @@ export const trimCustomerAddress = (customerAddress) => {
 };
 
 /** @namespace Util/Address/Index/trimCheckoutCustomerAddress */
-export const trimCheckoutCustomerAddress = (customerAddress) => {
+export const trimCheckoutCustomerAddress = (customerAddress: AddressType): Partial<TrimmedAddressType> => {
     const {
         company = null,
         city = '',
-        country_id = 1,
+        country_id = '1',
         firstname = '',
         lastname = '',
         postcode = '',
@@ -84,27 +87,31 @@ export const trimCheckoutCustomerAddress = (customerAddress) => {
         postcode,
         street,
         telephone,
-        region,
-        region_id,
-        region_code,
+        region: {
+            region_code,
+            region,
+            region_id
+        },
         vat_id
     };
 };
 
 /** @namespace Util/Address/Index/trimCheckoutAddress */
-export const trimCheckoutAddress = (customerAddress) => {
+export const trimCheckoutAddress = (customerAddress: AddressType): Partial<TrimmedAddressType> => {
     const {
         company = null,
         city = '',
-        country_id = 1,
+        country_id = '1',
         firstname = '',
         lastname = '',
         postcode = '',
         street = [''],
         telephone = '',
-        region = '',
-        region_id = 1,
-        region_code = null,
+        region: {
+            region_code = null,
+            region = null,
+            region_id = 1
+        } = {},
         vat_id = null
     } = customerAddress;
 
@@ -117,25 +124,29 @@ export const trimCheckoutAddress = (customerAddress) => {
         postcode,
         street,
         telephone,
-        region,
-        region_id,
-        region_code,
+        region: {
+            region_code,
+            region,
+            region_id
+        },
         vat_id
     };
 };
 
+export function removeEmptyStreets(street: string): string
+export function removeEmptyStreets(street: string[]): string[]
 /**
  * Removes null values from address.street
- * @param street
- * @returns {*}
  * @namespace Util/Address/Index/removeEmptyStreets
  */
-export const removeEmptyStreets = (street) => (
-    Array.isArray(street) ? street.filter((line) => line) : street
-);
+export function removeEmptyStreets(street: string | string[]): string | string[] {
+    return (
+        Array.isArray(street) ? street.filter((line) => Boolean(line)) : street
+    );
+}
 
 /** @namespace Util/Address/Index/trimAddressFields */
-export const trimAddressFields = (fields) => {
+export const trimAddressFields = (fields: AddressType): AddressType => {
     const {
         region_string: region,
         ...fieldsData
@@ -182,7 +193,7 @@ export const getFormFields = (fields, addressLinesQty) => {
 };
 
 /** @namespace Util/Address/Index/getCityAndRegionFromZipcode */
-export const getCityAndRegionFromZipcode = async (countryId, value) => {
+export const getCityAndRegionFromZipcode = async (countryId: string, value: string): Promise<(string | null)[]> => {
     const response = await fetch(`https://api.zippopotam.us/${countryId}/${value.split(' ')[0]}`);
     const data = await response.json();
 
@@ -195,7 +206,7 @@ export const getCityAndRegionFromZipcode = async (countryId, value) => {
 };
 
 /** @namespace Util/Address/Index/getDefaultAddressLabel */
-export const getDefaultAddressLabel = (address) => {
+export const getDefaultAddressLabel = (address: AddressType): string => {
     const { default_billing, default_shipping } = address;
 
     if (!default_billing && !default_shipping) {
@@ -214,8 +225,11 @@ export const getDefaultAddressLabel = (address) => {
 };
 
 /** @namespace Util/Address/Index/getAvailableRegions */
-export const getAvailableRegions = (country_id, countries) => {
-    const country = countries.find(({ id }) => id === country_id) || {};
+export const getAvailableRegions = (countryId: string, countries: CountryType[]): RegionType[] => {
+    const country = countries.find(({ id }) => id === countryId);
+    if (!country) {
+        return [];
+    }
     const { available_regions } = country;
 
     // need to handle null value

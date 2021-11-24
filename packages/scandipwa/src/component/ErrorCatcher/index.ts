@@ -9,7 +9,4 @@
  * @link https://github.com/scandipwa/scandipwa
  */
 
-export * from './Validator';
-export * from './Config';
-
-export * from './type.d';
+export * from './ErrorCatcher.provider';

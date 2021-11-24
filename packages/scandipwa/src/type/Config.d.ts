@@ -9,7 +9,18 @@
  * @link https://github.com/scandipwa/scandipwa
  */
 
-export * from './Validator';
-export * from './Config';
+export * from './Config.js';
 
-export * from './type.d';
+export interface RegionType {
+    id: number
+    code: string
+    name: string
+}
+export interface CountryType {
+    id: string
+    label: string
+    available_regions: RegionType[]
+    is_state_required?: boolean
+}
+
+// export type CountriesType = CountryType[]

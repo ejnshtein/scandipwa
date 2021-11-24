@@ -11,6 +11,7 @@
 
 import { css, InferStyleType } from 'Util/CSS';
 
+/** @namespace Component/StoreItems/Styles/root */
 export const root = (): string => css`
     font-size: 12px;
     padding: 6px 12px;

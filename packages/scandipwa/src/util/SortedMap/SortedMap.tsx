@@ -27,10 +27,10 @@ export class SortedMap {
     /**
      * Constructor. Used to convert the initial argument to Map.
      */
-    constructor(
+    __construct(
         object: { [key: string]: SortedItem },
         options: SortedMap['options']
-    ) {
+    ) : void {
         this.options = options;
 
         this._unsortedMap = new Map(

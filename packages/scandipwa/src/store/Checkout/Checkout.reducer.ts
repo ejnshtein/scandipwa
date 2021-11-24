@@ -6,11 +6,13 @@
  *
  * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
  * @package scandipwa/base-theme
- * @link https://github.com/scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
  */
-import { Action, Reducer } from 'redux';
+
+import { Reducer } from 'redux';
 
 import {
+    CheckoutActionType,
     UPDATE_EMAIL,
     UPDATE_EMAIL_AVAILABLE,
     UPDATE_SHIPPING_FIELDS
@@ -40,11 +42,7 @@ export const getInitialState = (): CheckoutStore => ({
 /** @namespace Store/Checkout/Reducer/CheckoutReducer */
 export const CheckoutReducer: Reducer<
     CheckoutStore,
-    Action<
-        typeof UPDATE_EMAIL
-        | typeof UPDATE_EMAIL_AVAILABLE
-        | typeof UPDATE_SHIPPING_FIELDS
-    > & CheckoutAction
+    CheckoutActionType
 > = (state = getInitialState(), action) => {
     switch (action.type) {
     case UPDATE_SHIPPING_FIELDS:
@@ -52,7 +50,7 @@ export const CheckoutReducer: Reducer<
 
         return {
             ...state,
-            shippingFields: shippingFields as Record<string, unknown>
+            shippingFields
         };
 
     case UPDATE_EMAIL:
@@ -60,7 +58,7 @@ export const CheckoutReducer: Reducer<
 
         return {
             ...state,
-            email: email as string
+            email
         };
 
     case UPDATE_EMAIL_AVAILABLE:
@@ -68,12 +66,10 @@ export const CheckoutReducer: Reducer<
 
         return {
             ...state,
-            isEmailAvailable: isEmailAvailable as boolean
+            isEmailAvailable
         };
 
     default:
         return state;
     }
 };
-
-export default CheckoutReducer;

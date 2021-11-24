@@ -31,10 +31,10 @@ export class SomethingWentWrongContainer extends PureComponent {
         updateMeta: PropTypes.func.isRequired,
         onClick: PropTypes.func.isRequired,
         errorDetails: PropTypes.shape({
-            err: PropTypes.shape({
+            error: PropTypes.shape({
 
             }),
-            info: PropTypes.shape({
+            errorInfo: PropTypes.shape({
                 componentStack: PropTypes.string
             })
         }).isRequired

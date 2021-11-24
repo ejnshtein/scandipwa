@@ -6,7 +6,7 @@
  *
  * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
  * @package scandipwa/base-theme
- * @link https://github.com/scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
  */
 
 import {
@@ -28,7 +28,7 @@ export interface UseQueryResult<T> {
         Name extends string,
         FieldReturnType,
         IsArray extends boolean
-    >(query: Query<Name, FieldReturnType, IsArray> | Mutation<Name, FieldReturnType, IsArray>) => Promise<boolean>
+    >(query: Query<Name, FieldReturnType, IsArray> | Mutation<Name, FieldReturnType, IsArray>) => Promise<T | false>
 }
 
 export interface UseQueryOptions {
@@ -37,7 +37,7 @@ export interface UseQueryOptions {
 }
 
 /** @namespace Hooks/UseQuery/useQuery */
-export function useQuery<T>(options: UseQueryOptions): UseQueryResult<T> {
+export function useQuery<T>(options?: UseQueryOptions): UseQueryResult<T> {
     const [result, setResult] = useState<Omit<UseQueryResult<T>, 'request'>>({
         data: undefined,
         isLoading: false,
@@ -62,7 +62,7 @@ export function useQuery<T>(options: UseQueryOptions): UseQueryResult<T> {
                 isLoading: false
             });
 
-            return true;
+            return data;
         } catch (error) {
             if (error instanceof Error) {
                 if (error.name === 'AbortError') {

@@ -17,7 +17,7 @@ import { BILLING_STEP } from 'Component/Checkout/Checkout.config';
 import CheckoutPayment from 'Component/CheckoutPayment';
 import Klarna from 'Component/Klarna';
 import NotSupportedPayment from 'Component/NotSupportedPayment';
-import { PurchaseOrder } from 'Component/PurchaseOrder/PurchaseOrder.component';
+import PurchaseOrder from 'Component/PurchaseOrder';
 import { paymentMethodsType } from 'Type/Checkout';
 
 import { KLARNA, PURCHASE_ORDER } from './CheckoutPayments.config';

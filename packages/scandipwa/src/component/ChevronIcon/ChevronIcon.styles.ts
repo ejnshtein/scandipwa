@@ -11,6 +11,7 @@
 
 import { css, InferStyleType } from 'Util/CSS';
 
+/** @namespace Component/ChevronIcon/Styles/root */
 export const root = (): string => css`
     fill: var(--color-black);
     cursor: pointer;

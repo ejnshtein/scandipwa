@@ -12,11 +12,23 @@
 export const SHOW_OFFLINE_NOTICE = 'SHOW_OFFLINE_NOTICE';
 export const SET_BIG_OFFLINE_NOTICE = 'SET_BIG_OFFLINE_NOTICE';
 
+export interface ShowOfflineNoticeType {
+    type: typeof SHOW_OFFLINE_NOTICE
+    isOffline: boolean
+}
+
+export interface SetBigOfflineNoticeType {
+    type: typeof SET_BIG_OFFLINE_NOTICE
+    isBig: boolean
+}
+
+export type OfflineActionType = ShowOfflineNoticeType | SetBigOfflineNoticeType
+
 /**
  * Show offline notice.
  * @namespace Store/Offline/Action/showOfflineNotice
  */
-export const showOfflineNotice = (isOffline: boolean) => ({
+export const showOfflineNotice = (isOffline: boolean): ShowOfflineNoticeType => ({
     type: SHOW_OFFLINE_NOTICE,
     isOffline
 });
@@ -25,7 +37,7 @@ export const showOfflineNotice = (isOffline: boolean) => ({
  * Set offline notice size to big.
  * @namespace Store/Offline/Action/setBigOfflineNotice
  */
-export const setBigOfflineNotice = (isBig: boolean) => ({
+export const setBigOfflineNotice = (isBig: boolean): SetBigOfflineNoticeType => ({
     type: SET_BIG_OFFLINE_NOTICE,
     isBig
 });

@@ -1,3 +1,4 @@
+/** @namespace Util/SimpleComponent */
 /**
  * ScandiPWA - Progressive Web App for Magento
  *
@@ -9,7 +10,12 @@
  * @link https://github.com/scandipwa/scandipwa
  */
 
-export * from './Validator';
-export * from './Config';
+export class SimpleComponent {
+    __construct(props) {
+        this.props = props;
+    }
 
-export * from './type.d';
+    render() {
+        throw new Error('Implement me!');
+    }
+}

@@ -12,6 +12,7 @@
 import { Action, Reducer } from 'redux';
 
 import { DeviceContextType } from 'Store/Device/Device.context';
+import { CountryType } from 'Type/Config';
 import BrowserDatabase from 'Util/BrowserDatabase';
 import isMobile from 'Util/Mobile';
 
@@ -22,12 +23,7 @@ export const MAX_HEIGHT = 40;
 export const DEFAULT_CATGORY_URL_SUFFIX = '.html';
 
 export interface ConfigStore {
-    countries: {
-        available_regions?: string
-        id: string
-        is_state_required?: boolean
-        label: string
-    }[]
+    countries: CountryType[]
     reviewRatings: {
         rating_code: string
         rating_id: string

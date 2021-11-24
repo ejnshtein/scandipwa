@@ -10,23 +10,40 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-import { Constructable } from 'Type/Constructable';
-import { SimpleComponent } from 'Util/SimpleComponent';
+import { useTheme } from 'Component/ThemeProvider/Theme.context';
+// import { Constructable } from 'Type/Constructable';
+import { SimpleComponentConstructor } from 'Util/SimpleComponent';
 
 /** @namespace Util/RenderHOC/renderHOC */
 export const renderHOC = <
     P extends Record<string, any> & { children?: React.ReactNode },
-    T,
+    T extends Record<string, any>,
+    S,
     N extends string
-    >(
-        Component: Constructable<SimpleComponent<T>>,
+>(
+        Component: SimpleComponentConstructor<T, S>,
         logicHook: (props: P) => T,
         displayName?: N
     ): React.FC<P> => {
-    const FunctionalComponent = (props: P): JSX.Element | null => {
+    const FunctionalComponent: React.FC<P> = (props): JSX.Element | null => {
         const componentProps = logicHook(props);
+        const theme = useTheme();
         if (!(componentProps as { children?: React.ReactNode }).children) {
             (componentProps as { children?: React.ReactNode }).children = props.children;
+        }
+
+        if (Component.styles) {
+            if (typeof Component.styles === 'function') {
+                const componentClasses = Component.styles(componentProps, theme);
+
+                const renderComponent = new Component(componentProps, componentClasses);
+
+                return renderComponent.render();
+            }
+
+            const renderComponent = new Component(componentProps, Component.styles);
+
+            return renderComponent.render();
         }
         const renderComponent = new Component(componentProps);
 

@@ -6,15 +6,21 @@
  *
  * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
  * @package scandipwa/base-theme
- * @link https://github.com/scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
  */
+
+import { CountryType } from 'Type/Config';
+
+export interface CountryOption extends CountryType {
+    value: CountryType['id']
+    name: CountryType['id']
+}
 
 /**
  * Transforms countries list into select options
- * @param countries
  * @namespace Util/Store/Transform/transformCountriesToOptions
  */
-export const transformCountriesToOptions = (countries) => (
+export const transformCountriesToOptions = (countries: CountryType[]): CountryOption[] => (
     countries.map((country) => {
         const { id } = country;
         return {

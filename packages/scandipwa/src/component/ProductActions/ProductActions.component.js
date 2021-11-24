@@ -12,7 +12,7 @@
 import PropTypes from 'prop-types';
 
 import Html from 'Component/Html';
-import { Product } from 'Component/Product/Product.component';
+import Product from 'Component/Product';
 import PRODUCT_TYPE from 'Component/Product/Product.config';
 import { IN_STOCK, OUT_OF_STOCK } from 'Component/Product/Stock.config';
 import ProductAlerts from 'Component/ProductAlerts';

@@ -6,15 +6,15 @@
  *
  * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
  * @package scandipwa/base-theme
- * @link https://github.com/scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
  */
 
 import { ErrorInfo, PureComponent } from 'react';
 
-import { ErrorCatcherContext } from './ErrorCatcher.context';
+import { ErrorCatcherContext, ErrorCatcherContextType } from 'Store/ErrorCatcher/ErrorCatcher.context';
 
-/** @namespace Store/ErrorCatcher/Provider */
-export class ErrorCatcherContextProvider extends PureComponent {
+/** @namespace Component/ErrorCatcher/Provider */
+export class ErrorCatcherProvider extends PureComponent {
     state = {
         hasError: false,
         error: undefined,
@@ -29,21 +29,27 @@ export class ErrorCatcherContextProvider extends PureComponent {
         });
     }
 
-    setHasError(hasError: boolean): void {
+    setHasError = (hasError: boolean): void => {
         this.setState({
             hasError
         });
-    }
+    };
 
-    render(): JSX.Element {
-        const { children } = this.props;
+    getContextValue(): ErrorCatcherContextType {
         const { hasError, error, errorInfo } = this.state;
         const contextValue = {
             hasError,
             error,
             errorInfo,
-            setHasError: this.setHasError.bind(this)
+            setHasError: this.setHasError
         };
+
+        return contextValue;
+    }
+
+    render(): JSX.Element {
+        const { children } = this.props;
+        const contextValue = this.getContextValue();
 
         return (
             <ErrorCatcherContext.Provider value={ contextValue }>

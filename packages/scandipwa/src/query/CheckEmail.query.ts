@@ -6,23 +6,20 @@
  *
  * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
  * @package scandipwa/base-theme
- * @link https://github.com/scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
  */
 
-import { Field } from 'Util/Query';
+import { Query } from '@tilework/opus';
 
 /**
  * Email availability check Query
- * @class CheckEmailQuery
  * @namespace Query/CheckEmail/Query */
 export class CheckEmailQuery {
-    getIsEmailAvailableQuery(email) {
-        const query = new Field('isEmailAvailable')
+    static getIsEmailAvailableQuery(email: string) {
+        const query = new Query('isEmailAvailable')
             .addArgument('email', 'String!', email)
             .addField('is_email_available');
 
         return query;
     }
 }
-
-export default new CheckEmailQuery();

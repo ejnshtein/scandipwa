@@ -1,29 +1,35 @@
+/**
+ * ScandiPWA - Progressive Web App for Magento
+ *
+ * Copyright © Scandiweb, Inc. All rights reserved.
+ * See LICENSE for license details.
+ *
+ * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
+ * @package scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
+ */
+
 import { createContext, useContext } from 'react';
 
-export enum InputType {
-    TEXT = 'text',
-    CHECKBOX = 'checkbox',
-    DATE = 'date',
-    NUMBER = 'number',
-    RANGE = 'range',
-    RADIO = 'radio',
-    EMAIL = 'email',
-    TEXTAREA = 'textarea'
-}
+import { FIELD_TYPE } from 'Component/PureForm/Field/Field.config';
 
-export interface HandleFormChangeOptions {
+export interface HandleFormChangeOptions<T = any> {
     name: string
-    type: InputType
+    type: FIELD_TYPE
     required?: boolean
     validate?: (value: unknown) => boolean
+    value?: number | string | boolean | T | T[]
 }
 
 export interface FormContextType {
+    isValid: boolean
+    errorMessages?: string[]
     formValues: Record<string, unknown>
-    handleFormChange: (options: HandleFormChangeOptions) => (e: Event) => void
+    handleFormChange: (options: HandleFormChangeOptions) => void
 }
 
 export const FormContext = createContext<FormContextType>({
+    isValid: true,
     formValues: {},
     handleFormChange: () => () => {}
 });

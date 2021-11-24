@@ -1,6 +1,17 @@
+/**
+ * ScandiPWA - Progressive Web App for Magento
+ *
+ * Copyright © Scandiweb, Inc. All rights reserved.
+ * See LICENSE for license details.
+ *
+ * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
+ * @package scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
+ */
+
 import { root as chevronIcon } from 'Component/ChevronIcon/ChevronIcon.styles';
 import { ThemeType } from 'Component/ThemeProvider';
-import { css, InferStyleType } from 'Util/CSS';
+import { css, InferStyleType, useStyles } from 'Util/CSS';
 
 /** @namespace Component/StoreSwitcher/Styles/root */
 export const root = (theme: ThemeType): string => css`
@@ -38,16 +49,20 @@ export const root = (theme: ThemeType): string => css`
     }
 `;
 
-export const rootWithChevron = (): string => css({
-    [`.${chevronIcon()}`]: {
-        width: '14px',
-        height: '14px',
-        marginInlineStart: '10px',
-        insetInlineEnd: 0,
-        background: 'red'
-    }
-});
+/** @namespace Component/StoreSwitcher/Styles/rootWithChevron */
+export function rootWithChevron(this: ThemeType): string {
+    return css({
+        [`.${chevronIcon()}`]: {
+            width: '14px',
+            height: '14px',
+            marginInlineStart: '10px',
+            insetInlineEnd: 0,
+            background: 'red'
+        }
+    });
+}
 
+/** @namespace Component/StoreSwitcher/Styles/title */
 export const title = (): string => css`
     color: var(--input-color);
     cursor: pointer;
@@ -59,6 +74,7 @@ export const title = (): string => css`
     }
 `;
 
+/** @namespace Component/StoreSwitcher/Styles/list */
 export const list = (): string => css`
     background-color: var(--store-switcher-list-background);
     border: 1px solid var(--input-border-color);
@@ -81,3 +97,21 @@ export const styles = {
 };
 
 export type StoreSwitcherStyleType = InferStyleType<typeof styles>;
+
+/** @namespace Component/StoreSwitcher/Styles/useComponentStyles */
+export const useComponentStyles = (): StoreSwitcherStyleType => useStyles(styles);
+
+/** @namespace Component/StoreSwitcher/Styles/buildStyles */
+export const buildStyles = <Styles>(styles: () => Record<string, string>): Styles => {
+    const componentClassesFunctionMap = styles();
+
+    const componentClasses = Object.entries(componentClassesFunctionMap).reduce(
+        (acc, [className, fn]) => ({
+            ...acc,
+            [className]: fn()
+        }),
+      {} as Styles
+    );
+
+    return componentClasses;
+};

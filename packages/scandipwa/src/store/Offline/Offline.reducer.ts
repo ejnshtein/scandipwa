@@ -6,12 +6,13 @@
  *
  * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
  * @package scandipwa/base-theme
- * @link https://github.com/scandipwa/base-theme
+ * @link https://github.com/scandipwa/scandipwa
  */
 
-import { Action, Reducer } from 'redux';
+import { Reducer } from 'redux';
 
 import {
+    OfflineActionType,
     SET_BIG_OFFLINE_NOTICE,
     SHOW_OFFLINE_NOTICE
 } from './Offline.action';
@@ -27,8 +28,6 @@ declare module 'Util/Store/type' {
     }
 }
 
-export interface OfflineAction extends Partial<OfflineStore> {}
-
 /** @namespace Store/Offline/Reducer/getInitialState */
 export const getInitialState = (): OfflineStore => ({
     isOffline: true,
@@ -38,7 +37,7 @@ export const getInitialState = (): OfflineStore => ({
 /** @namespace Store/Offline/Reducer/OfflineReducer */
 export const OfflineReducer: Reducer<
     OfflineStore,
-    Action<typeof SET_BIG_OFFLINE_NOTICE | typeof SHOW_OFFLINE_NOTICE> & OfflineAction
+    OfflineActionType
 > = (
     state = getInitialState(),
     action

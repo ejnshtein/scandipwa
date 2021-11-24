@@ -25,8 +25,10 @@ export interface StoreItemsLogicProps {
     handleStoreSelect: (value: string) => void;
 }
 
+/** @namespace Component/StoreItems/Container/useComponentStyles */
 export const useComponentStyles = (): StoreItemsStyleType => useStyles(styles);
 
+/** @namespace Component/StoreItems/Container/storeItemsLogic */
 export const storeItemsLogic = (props: StoreItemsLogicProps): StoreItemsProps => {
     const {
         item: { value = '' } = {},

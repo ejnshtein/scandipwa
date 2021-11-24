@@ -22,6 +22,7 @@ export interface StoreItemsProps {
     css: StoreItemsStyleType
 }
 
+/** @namespace Component/StoreItems/Component */
 export class StoreItemsComponent extends SimpleComponent<StoreItemsProps> {
     render(): JSX.Element {
         const {

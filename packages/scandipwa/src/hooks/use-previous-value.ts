@@ -9,7 +9,14 @@
  * @link https://github.com/scandipwa/scandipwa
  */
 
-export * from './Validator';
-export * from './Config';
+import { useEffect, useRef } from 'react';
 
-export * from './type.d';
+/** @namespace Hooks/UsePreviousValue/usePrevious */
+export function usePrevious<T>(value: T): T {
+    const ref = useRef<T>();
+    useEffect(() => {
+        ref.current = value;
+    });
+
+    return ref.current as T;
+}

@@ -28,7 +28,6 @@ export class QueryDispatcher {
      * Creates an instance of QueryDispatcher.
      * @param  {String} name Name of model for ServiceWorker to send BroadCasts updates to
      * @param  {Number} cacheTTL Cache TTL (in seconds) for ServiceWorker to cache responses
-     * @memberof QueryDispatcher
      */
     __construct(name, cacheTTL = ONE_MONTH_IN_SECONDS) {
         super.__construct();
@@ -41,7 +40,7 @@ export class QueryDispatcher {
      * Is responsible for request routing and manages `onError`, `onSuccess`, `onUpdate` functions triggers.
      * @param  {Function} dispatch Store changing function from Redux (dispatches actions)
      * @param  {any} options Any options received from Container
-     * @return {void}@memberof QueryDispatcher
+     * @return {void}
      */
     handleData(dispatch, options) {
         const { name, cacheTTL } = this;
@@ -89,7 +88,6 @@ export class QueryDispatcher {
      * @param  {any} data Data received from fetch of GraphQL endpoint
      * @param  {Function} dispatch Store changing function from Redux (dispatches actions)
      * @return {void}
-     * @memberof QueryDispatcher
      */
     onUpdate(data, dispatch, options) {
         this.onSuccess(data, dispatch, options);
@@ -99,8 +97,6 @@ export class QueryDispatcher {
      * Is responsible for request building (request & mutation preparation)
      * @param  {any} options Any options received from Container
      * @param {Function} dispatch
-     * @return {Array<Field>|Field} Array or single item of Field instances
-     * @memberof QueryDispatcher
      */
     prepareRequest(options, dispatch) {}
 
@@ -110,7 +106,7 @@ export class QueryDispatcher {
      * Should dispatch some action.
      * @param  {any} data
      * @param  {any} dispatch
-     * @return {void}@memberof QueryDispatcher
+     * @return {void}
      */
     onSuccess(data, dispatch) {}
 
@@ -120,7 +116,7 @@ export class QueryDispatcher {
      * Should dispatch some action.
      * @param  {any} error
      * @param  {any} dispatch
-     * @return {void}@memberof QueryDispatcher
+     * @return {void}
      */
     onError(error, dispatch) {}
 }

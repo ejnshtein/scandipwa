@@ -59,13 +59,9 @@ export class AppComponent extends SimpleComponent<AppProps> {
         this.renderUnStated.bind(this)
     ];
 
-    state = {
-        isSomethingWentWrong: false,
-        errorDetails: {}
-    };
-
+    // TODO fix class properties to use __construct instead of constuctor
     __construct(props: AppProps): void {
-        super.__construct!(props);
+        super.__construct(props);
 
         this.configureAppBasedOnEnvironment();
         this.configureApp();
@@ -167,9 +163,9 @@ export class AppComponent extends SimpleComponent<AppProps> {
     );
 
     renderContextProviders(): JSX.Element {
-        const { isSomethingWentWrong } = this.state;
+        const { hasError } = this.props;
 
-        const child = isSomethingWentWrong
+        const child = hasError
             ? this.renderSomethingWentWrong
             : this.renderRootComponents;
 
@@ -188,8 +184,8 @@ export class AppComponent extends SimpleComponent<AppProps> {
         const { error, errorInfo } = this.props;
 
         const errorDetails = {
-            err: error,
-            info: errorInfo
+            error,
+            errorInfo
         };
 
         return (

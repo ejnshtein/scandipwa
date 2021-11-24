@@ -9,7 +9,7 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-import { Product } from './Product';
+import Product from './Product';
 
 export interface TaxRate {
     percent: number;
